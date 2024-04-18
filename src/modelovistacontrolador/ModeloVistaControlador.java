@@ -7,8 +7,7 @@ import javax.swing.SwingUtilities;
 public class ModeloVistaControlador extends JFrame{
     JTabbedPane tabbedPane = new JTabbedPane();
     
-    Panel2 panel2 = new Panel2();
-    Panel1 panel1 = new Panel1(panel2);
+    Panel1 panel1 = new Panel1();
     
     public ModeloVistaControlador() {
         setTitle("Tarea");
@@ -17,7 +16,7 @@ public class ModeloVistaControlador extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         tabbedPane.add("New Event", panel1);
-        tabbedPane.add("Events", panel2);
+        tabbedPane.add("Events", panel1.getPanel2());
         
         add(tabbedPane);
 

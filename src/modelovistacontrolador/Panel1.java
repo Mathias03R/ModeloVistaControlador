@@ -18,6 +18,8 @@ public class Panel1 extends JPanel{
     
     private Object[] info;
     
+    private Panel2 panel2 = new Panel2();
+    
     JLabel event = new JLabel("Event Description");
     JLabel email = new JLabel("Forward e-mail");
     JLabel date = new JLabel("Date");
@@ -38,7 +40,7 @@ public class Panel1 extends JPanel{
     JButton save = new JButton("Save");
     JButton clean = new JButton("Clean");
 
-    public Panel1(Panel2 panel2) {
+    public Panel1() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -100,49 +102,57 @@ public class Panel1 extends JPanel{
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Obtener los datos del panel
-                String eventName = eventField.getText();
-                String eventEmail = emailField.getText();
-                String eventDate = dateField.getText();
-                String eventFrequency = "";
-                if (daily.isSelected()) {
-                    eventFrequency = "Daily";
-                } else if (weekly.isSelected()) {
-                    eventFrequency = "Weekly";
-                } else if (monthly.isSelected()) {
-                    eventFrequency = "Monthly";
-                }
-                boolean eventAlarm = alarm.isSelected();
-
-                info = new Object[]{eventName, eventEmail, eventDate, eventFrequency, eventAlarm};
-                panel2.addEvent(info);
+                obtenerDatos();
             }
         });
         
         clean.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventField.setText("");
-                emailField.setText("");
-                dateField.setText("");
-                
-                if (daily.isSelected()){
-                    daily.setSelected(false);
-                }
-                if (weekly.isSelected()){
-                    weekly.setSelected(false);
-                }
-                if (monthly.isSelected()){
-                    monthly.setSelected(false);
-                }
-                if (alarm.isSelected()){
-                    alarm.setSelected(false);
-                }
+                cleanFields();
+                cleanRadioButtons();
+                cleanCheckBox();
             }
         });
     }
     
     public Object[] getInfo() {
         return info;
+    }
+    
+    private void cleanFields(){
+        eventField.setText("");
+        emailField.setText("");
+        dateField.setText("");
+    }
+    
+    private void cleanRadioButtons(){
+        grupoCheckboxes.clearSelection();
+    }
+    
+    private void cleanCheckBox(){
+        alarm.setSelected(false);
+    }
+
+    public Panel2 getPanel2() {
+        return panel2;
+    }
+    
+    private void obtenerDatos(){
+        String eventName = eventField.getText();
+        String eventEmail = emailField.getText();
+        String eventDate = dateField.getText();
+        String eventFrequency = "";
+        if (daily.isSelected()) {
+            eventFrequency = "Daily";
+        } else if (weekly.isSelected()) {
+            eventFrequency = "Weekly";
+        } else if (monthly.isSelected()) {
+            eventFrequency = "Monthly";
+        }
+        boolean eventAlarm = alarm.isSelected();
+
+        info = new Object[]{eventName, eventEmail, eventDate, eventFrequency, eventAlarm};
+        panel2.addEvent(info);
     }
 }
